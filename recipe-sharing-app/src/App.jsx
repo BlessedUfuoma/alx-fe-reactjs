@@ -1,10 +1,11 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 
 function App() {
   return (
+    <BrowserRouter> 
     <div>
       <h1>🍳 Recipe Sharing App</h1>
       <nav>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/recipes/:id" element={<RecipeDetails />} />
       </Routes>
     </div>
+    </BrowserRouter>
   );
 }
 
