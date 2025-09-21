@@ -1,26 +1,33 @@
 import axios from "axios";
 
-const SEARCH_URL = "https://api.github.com/search/users";
+const GITHUB_API_URL = "https://api.github.com/users";
 
-// Advanced user search
-export const fetchUsers = async ({ username, location, minRepos }) => {
+
+export const fetchUserData = async (username) => {
   try {
-    let query = "";
-
-    if (username) query += `${username} `;
-    if (location) query += `location:${encodeURIComponent(location)} `;
-    if (minRepos) query += `repos:>=${minRepos} `;
-
-    // GitHub requires at least 1 query parameter
-    if (!query.trim()) {
-      throw new Error("Please enter at least one search criteria");
-    }
-
-    const response = await axios.get(`${SEARCH_URL}?q=${query.trim()}`);
-    return response.data.items; // GitHub returns { total_count, items: [...] }
+    const response = await axios.get(`${GITHUB_API_URL}/${username}`);
+    return response.data;
   } catch (error) {
-    console.error("GitHub API error:", error.message);
-    throw new Error("Looks like we can't find the user(s)");
+    console.error("Error fetching user:", error);
+    throw error;
   }
 };
 
+
+const GITHUB_SEARCH_API = "https://api.github.com/search/users?q=";
+
+export const fetchAdvancedUsers = async (username, location, minRepos) => {
+  try {
+    let query = "";
+
+    if (username) query += `${username} in:login `;
+    if (location) query += `location:${location} `;
+    if (minRepos) query += `repos:>=${minRepos} `;
+
+    const response = await axios.get(`${GITHUB_SEARCH_API}?q=${query}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching advanced users:", error);
+    throw error;
+  }
+};
