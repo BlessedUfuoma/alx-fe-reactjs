@@ -5,7 +5,7 @@ function HomePage() {
 
   useEffect(() => {
     // Fetch from local JSON file
-    fetch("/data.json")
+    fetch("/src/data.json")
       .then((res) => res.json())
       .then((data) => setRecipes(data))
       .catch((err) => console.error("Error loading recipes:", err));
