@@ -53,7 +53,7 @@ const FormikForm = () => {
       >
         {({ isSubmitting }) => (
           <Form>
-            {/* Username Field */}
+            {/* Username */}
             <div style={{ marginBottom: "12px" }}>
               <label>Username:</label>
               <Field
@@ -64,7 +64,7 @@ const FormikForm = () => {
               <ErrorMessage name="username" component="div" style={{ color: "red" }} />
             </div>
 
-            {/* Email Field */}
+            {/* Email */}
             <div style={{ marginBottom: "12px" }}>
               <label>Email:</label>
               <Field
@@ -75,7 +75,7 @@ const FormikForm = () => {
               <ErrorMessage name="email" component="div" style={{ color: "red" }} />
             </div>
 
-            {/* Password Field */}
+            {/* Password */}
             <div style={{ marginBottom: "12px" }}>
               <label>Password:</label>
               <Field
@@ -86,11 +86,11 @@ const FormikForm = () => {
               <ErrorMessage name="password" component="div" style={{ color: "red" }} />
             </div>
 
-            {/* Status Messages */}
+            {/* Messages */}
             {status.error && <p style={{ color: "red" }}>{status.error}</p>}
             {status.success && <p style={{ color: "green" }}>{status.success}</p>}
 
-            {/* Submit Button */}
+            {/* Button */}
             <button
               type="submit"
               disabled={isSubmitting}
