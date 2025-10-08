@@ -1,25 +1,18 @@
 import { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (!formData.username || !formData.email || !formData.password) {
+    if (!username || !email || !password) {
       setError("All fields are required.");
       return;
     }
@@ -29,12 +22,14 @@ const RegistrationForm = () => {
       const response = await fetch("https://jsonplaceholder.typicode.com/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ username, email, password }),
       });
 
       if (response.ok) {
         setSuccess("User registered successfully!");
-        setFormData({ username: "", email: "", password: "" });
+        setUsername("");
+        setEmail("");
+        setPassword("");
       } else {
         setError("Registration failed. Try again.");
       }
@@ -52,8 +47,8 @@ const RegistrationForm = () => {
           <input
             type="text"
             name="username"
-            value={formData.username}
-            onChange={handleChange}
+            value={username}          {/* ✅ matches expected format */}
+            onChange={(e) => setUsername(e.target.value)}
             style={{ width: "100%", padding: "8px", marginTop: "4px" }}
           />
         </div>
@@ -63,8 +58,8 @@ const RegistrationForm = () => {
           <input
             type="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}             {/* ✅ matches expected format */}
+            onChange={(e) => setEmail(e.target.value)}
             style={{ width: "100%", padding: "8px", marginTop: "4px" }}
           />
         </div>
@@ -74,8 +69,8 @@ const RegistrationForm = () => {
           <input
             type="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}          {/* ✅ matches expected format */}
+            onChange={(e) => setPassword(e.target.value)}
             style={{ width: "100%", padding: "8px", marginTop: "4px" }}
           />
         </div>
@@ -83,7 +78,17 @@ const RegistrationForm = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>{success}</p>}
 
-        <button type="submit" style={{ width: "100%", padding: "10px", background: "blue", color: "white", border: "none", borderRadius: "5px" }}>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px",
+            background: "blue",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+          }}
+        >
           Register
         </button>
       </form>
